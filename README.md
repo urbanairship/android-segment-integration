@@ -1,1 +1,1 @@
-# android-segment-integration-
+# Urban Airship Segment Integration
