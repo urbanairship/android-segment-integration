@@ -18,6 +18,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+/**
+ * Urban Airship Segment integration.
+ */
 public class UrbanAirshipIntegration extends Integration<UAirship> {
 
     private static final String SCREEN_PREFIX = "VIEWED_";
@@ -39,16 +42,18 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
             return null;
         }
 
-        @Override public String key() {
+        @Override
+        public String key() {
             return URBAN_AIRSHIP_KEY;
         }
     };
 
-
+    @Override
     public void identify(IdentifyPayload identify) {
         UAirship.shared().getPushManager().getNamedUser().setId(identify.userId());
     }
 
+    @Override
     public void group(GroupPayload group) {
         String name = group.getString("name");
         if (!UAStringUtil.isEmpty(name)) {
@@ -60,10 +65,12 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
         }
     }
 
+    @Override
     public void track(TrackPayload track) {
         addEvent(track.event(), track.properties());
     }
 
+    @Override
     public void screen(ScreenPayload screen) {
         StringBuilder builder = new StringBuilder()
                 .append(SCREEN_PREFIX);
@@ -79,15 +86,22 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
         addEvent(builder.toString(), screen.properties());
     }
 
+    @Override
     public void reset() {
         UAirship.shared().getPushManager().getNamedUser().setId(null);
         UAirship.shared().getPushManager().setTags(new HashSet<String>());
     }
 
+    @Override
     public UAirship getUnderlyingInstance() {
         return UAirship.shared();
     }
 
+    /**
+     * Creates a Custom Event from Segment track and screen calls.
+     * @param eventName The event name.
+     * @param properties The event properties.
+     */
     private void addEvent(String eventName, Properties properties) {
         CustomEvent.Builder eventBuilder = new CustomEvent.Builder(eventName);
 

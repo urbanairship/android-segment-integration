@@ -1,5 +1,6 @@
 package com.urbanairship.extension.segment;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -9,7 +10,13 @@ import com.urbanairship.AirshipConfigOptions;
 import com.urbanairship.Autopilot;
 import com.urbanairship.UAirship;
 
-
+/**
+ * Autopilot for segment integration.
+ *
+ * Autopilot allows segment integration call to be called outside of {@link Application#onCreate()}.
+ * When a push is received and wakes the application up, Urban Airship will used the last config to
+ * takeoff.
+ */
 public class IntegrationAutopilot extends Autopilot {
 
     public static final String PRODUCTION_APP_KEY = "productionAppKey";
@@ -26,6 +33,7 @@ public class IntegrationAutopilot extends Autopilot {
 
     }
 
+    @Override
     public AirshipConfigOptions createAirshipConfigOptions(@NonNull Context context) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
 
@@ -39,6 +47,11 @@ public class IntegrationAutopilot extends Autopilot {
                 .build();
     }
 
+    /**
+     * Updates the Urban Airship config.
+     * @param context The application context.
+     * @param settings Segment settings.
+     */
     static void UpdateConfig(Context context, ValueMap settings) {
         context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
                 .edit()
