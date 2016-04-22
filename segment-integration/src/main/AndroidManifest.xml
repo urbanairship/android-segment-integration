@@ -5,7 +5,7 @@
 
       <meta-data
           android:name="com.urbanairship.autopilot"
-          android:value="com.urbanairship.unityplugin.UnityAutopilot"/>
+          android:value="com.urbanairship.extension.segment.SegmentAutopilot"/>
 
   </application>
 

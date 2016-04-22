@@ -19,5 +19,5 @@ android {
 
 dependencies {
     provided 'com.segment.analytics.android:analytics:4.0.0'
-    compile 'com.urbanairship.android:urbanairship-sdk:7.0.+'
+    compile 'com.urbanairship.android:urbanairship-sdk:7.1.+'
 }

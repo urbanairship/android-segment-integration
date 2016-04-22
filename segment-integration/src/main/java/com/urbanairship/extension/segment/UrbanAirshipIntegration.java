@@ -2,7 +2,6 @@ package com.urbanairship.extension.segment;
 
 
 import com.segment.analytics.Analytics;
-import com.segment.analytics.Properties;
 import com.segment.analytics.ValueMap;
 import com.segment.analytics.integrations.GroupPayload;
 import com.segment.analytics.integrations.IdentifyPayload;
@@ -15,7 +14,6 @@ import com.urbanairship.analytics.CustomEvent;
 import com.urbanairship.util.UAStringUtil;
 
 import java.util.HashSet;
-import java.util.Set;
 
 
 /**
@@ -31,7 +29,7 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
 
         @Override
         public Integration<?> create(ValueMap settings, Analytics analytics) {
-            IntegrationAutopilot.UpdateConfig(analytics.getApplication(), settings);
+            SegmentAutopilot.updateSegmentSettings(analytics.getApplication(), settings);
             Autopilot.automaticTakeOff(analytics.getApplication());
 
             // Make sure we actually are flying before returning the integration
@@ -56,63 +54,28 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
     @Override
     public void group(GroupPayload group) {
         String name = group.getString("name");
-        if (!UAStringUtil.isEmpty(name)) {
-            // Add the Urban Airship tag
-            Set<String> tags = UAirship.shared().getPushManager().getTags();
-            tags.add(name);
-            UAirship.shared().getPushManager().setTags(tags);
-
+        if (UAStringUtil.isEmpty(name)) {
+            return;
         }
+
+        UAirship.shared().getPushManager()
+                .editTags()
+                .addTag(name)
+                .apply();
     }
 
     @Override
     public void track(TrackPayload track) {
-        addEvent(track.event(), track.properties());
-    }
+        CustomEvent.Builder eventBuilder = new CustomEvent.Builder(track.event());
 
-    @Override
-    public void screen(ScreenPayload screen) {
-        StringBuilder builder = new StringBuilder()
-                .append(SCREEN_PREFIX);
-
-        if (screen.category() == null) {
-            builder.append("_").append(screen.category());
+        if (track.properties().containsKey("revenue")) {
+            eventBuilder.setEventValue(track.properties().revenue());
+        } else if (track.properties().containsKey("value")) {
+            eventBuilder.setEventValue(track.properties().value());
         }
 
-        if (screen.name() != null) {
-            builder.append("_").append(screen.name());
-        }
-
-        addEvent(builder.toString(), screen.properties());
-    }
-
-    @Override
-    public void reset() {
-        UAirship.shared().getPushManager().getNamedUser().setId(null);
-        UAirship.shared().getPushManager().setTags(new HashSet<String>());
-    }
-
-    @Override
-    public UAirship getUnderlyingInstance() {
-        return UAirship.shared();
-    }
-
-    /**
-     * Creates a Custom Event from Segment track and screen calls.
-     * @param eventName The event name.
-     * @param properties The event properties.
-     */
-    private void addEvent(String eventName, Properties properties) {
-        CustomEvent.Builder eventBuilder = new CustomEvent.Builder(eventName);
-
-        if (properties.containsKey("revenue")) {
-            eventBuilder.setEventValue(properties.revenue());
-        } else if (properties.containsKey("value")) {
-            eventBuilder.setEventValue(properties.value());
-        }
-
-        for (String key : properties.keySet()) {
-            Object value = properties.get(key);
+        for (String key : track.properties().keySet()) {
+            Object value = track.properties().get(key);
 
             if (value instanceof String) {
                 eventBuilder.addProperty(key, (String) value);
@@ -129,4 +92,32 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
 
         UAirship.shared().getAnalytics().addEvent(eventBuilder.create());
     }
+
+    @Override
+    public void screen(ScreenPayload screen) {
+        StringBuilder builder = new StringBuilder()
+                .append(SCREEN_PREFIX);
+
+        if (screen.category() == null) {
+            builder.append("_").append(screen.category());
+        }
+
+        if (screen.name() != null) {
+            builder.append("_").append(screen.name());
+        }
+
+        UAirship.shared().getAnalytics().trackScreen(builder.toString());
+    }
+
+    @Override
+    public void reset() {
+        UAirship.shared().getPushManager().getNamedUser().setId(null);
+        UAirship.shared().getPushManager().setTags(new HashSet<String>());
+    }
+
+    @Override
+    public UAirship getUnderlyingInstance() {
+        return UAirship.shared();
+    }
+
 }
