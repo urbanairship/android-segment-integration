@@ -21,7 +21,7 @@ import java.util.HashSet;
  */
 public class UrbanAirshipIntegration extends Integration<UAirship> {
 
-    private static final String SCREEN_PREFIX = "VIEWED_";
+    private static final String SCREEN_PREFIX = "VIEWED";
 
     public static final String URBAN_AIRSHIP_KEY = "URBAN_AIRSHIP";
 
@@ -34,7 +34,7 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
 
             // Make sure we actually are flying before returning the integration
             if (UAirship.isFlying() || UAirship.isTakingOff()) {
-                return new UrbanAirshipIntegration();
+                return new UrbanAirshipIntegration(UAirship.shared());
             }
 
             return null;
@@ -46,9 +46,15 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
         }
     };
 
+    private final UAirship airship;
+
+    UrbanAirshipIntegration(UAirship airship) {
+        this.airship = airship;
+    }
+
     @Override
     public void identify(IdentifyPayload identify) {
-        UAirship.shared().getPushManager().getNamedUser().setId(identify.userId());
+        airship.getPushManager().getNamedUser().setId(identify.userId());
     }
 
     @Override
@@ -58,7 +64,7 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
             return;
         }
 
-        UAirship.shared().getPushManager()
+        airship.getPushManager()
                 .editTags()
                 .addTag(name)
                 .apply();
@@ -90,7 +96,7 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
             }
         }
 
-        UAirship.shared().getAnalytics().addEvent(eventBuilder.create());
+        airship.getAnalytics().addEvent(eventBuilder.create());
     }
 
     @Override
@@ -98,7 +104,7 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
         StringBuilder builder = new StringBuilder()
                 .append(SCREEN_PREFIX);
 
-        if (screen.category() == null) {
+        if (screen.category() != null) {
             builder.append("_").append(screen.category());
         }
 
@@ -106,18 +112,18 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
             builder.append("_").append(screen.name());
         }
 
-        UAirship.shared().getAnalytics().trackScreen(builder.toString());
+        airship.getAnalytics().trackScreen(builder.toString());
     }
 
     @Override
     public void reset() {
-        UAirship.shared().getPushManager().getNamedUser().setId(null);
-        UAirship.shared().getPushManager().setTags(new HashSet<String>());
+        airship.getPushManager().getNamedUser().setId(null);
+        airship.getPushManager().setTags(new HashSet<String>());
     }
 
     @Override
     public UAirship getUnderlyingInstance() {
-        return UAirship.shared();
+        return airship;
     }
 
 }
