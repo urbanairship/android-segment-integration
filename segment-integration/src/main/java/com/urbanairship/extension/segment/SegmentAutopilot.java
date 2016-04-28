@@ -103,4 +103,9 @@ public class SegmentAutopilot extends Autopilot {
     public void onAirshipReady(UAirship uAirship) {
         Logger.info("SegmentAutopilot - Airship Ready");
     }
+
+    @Override
+    public boolean allowEarlyTakeOff(@NonNull Context context) {
+        return false;
+    }
 }

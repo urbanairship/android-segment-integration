@@ -20,4 +20,9 @@ android {
 dependencies {
     provided 'com.segment.analytics.android:analytics:4.0.0'
     compile 'com.urbanairship.android:urbanairship-sdk:7.1.+'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.segment.analytics.android:analytics-tests:4.0.0'
+    testCompile 'org.mockito:mockito-core:1.9.5'
+    testCompile 'org.robolectric:shadows-support-v4:3.0'
 }
