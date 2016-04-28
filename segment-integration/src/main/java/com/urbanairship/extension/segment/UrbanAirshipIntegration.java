@@ -1,5 +1,8 @@
-package com.urbanairship.extension.segment;
+/*
+ Copyright 2016 Urban Airship and Contributors
+*/
 
+package com.urbanairship.extension.segment;
 
 import com.segment.analytics.Analytics;
 import com.segment.analytics.ValueMap;

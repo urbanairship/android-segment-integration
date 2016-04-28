@@ -1,3 +1,7 @@
+/*
+ Copyright 2016 Urban Airship and Contributors
+*/
+
 package com.urbanairship.extension.segment;
 
 import android.app.Application;
