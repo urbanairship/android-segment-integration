@@ -1,4 +1,10 @@
+group = 'com.urbanairship.android'
+version = '1.0.0'
+description = "Urban Airship Segment integration"
+
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 23
@@ -8,7 +14,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName project.version
     }
 
     compileOptions {
@@ -25,4 +31,40 @@ dependencies {
     testCompile 'com.segment.analytics.android:analytics-tests:4.0.0'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'org.robolectric:shadows-support-v4:3.0'
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'aar'
+            groupId project.group
+            artifactId 'segment-integration'
+
+            name project.name
+            description project.description
+            url 'http://www.urbanairship.com'
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+
+    configurations = ['archives']
+
+    pkg {
+        userOrg = 'urbanairship'
+        name = project.name
+        desc = project.description
+        websiteUrl = 'http://www.urbanairship.com'
+
+        version {
+            repo = 'android'
+            publish = false
+            desc = project.description
+            name = project.version
+            released = new Date()
+        }
+    }
 }
