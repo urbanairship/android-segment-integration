@@ -24,8 +24,6 @@ import java.util.HashSet;
  */
 public class UrbanAirshipIntegration extends Integration<UAirship> {
 
-    private static final String SCREEN_PREFIX = "VIEWED";
-
     public static final String URBAN_AIRSHIP_KEY = "Urban Airship";
 
     public static final Factory FACTORY = new Factory() {
@@ -62,14 +60,14 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
 
     @Override
     public void group(GroupPayload group) {
-        String name = group.getString("name");
-        if (UAStringUtil.isEmpty(name)) {
+        String groupId = group.groupId();
+        if (UAStringUtil.isEmpty(groupId)) {
             return;
         }
 
         airship.getPushManager()
                 .editTags()
-                .addTag(name)
+                .addTag(groupId)
                 .apply();
     }
 
@@ -104,18 +102,7 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
 
     @Override
     public void screen(ScreenPayload screen) {
-        StringBuilder builder = new StringBuilder()
-                .append(SCREEN_PREFIX);
-
-        if (screen.category() != null) {
-            builder.append("_").append(screen.category());
-        }
-
-        if (screen.name() != null) {
-            builder.append("_").append(screen.name());
-        }
-
-        airship.getAnalytics().trackScreen(builder.toString());
+        airship.getAnalytics().trackScreen(screen.event());
     }
 
     @Override
