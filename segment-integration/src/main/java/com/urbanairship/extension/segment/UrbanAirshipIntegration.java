@@ -26,7 +26,7 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
 
     private static final String SCREEN_PREFIX = "VIEWED";
 
-    public static final String URBAN_AIRSHIP_KEY = "URBAN_AIRSHIP";
+    public static final String URBAN_AIRSHIP_KEY = "Urban Airship";
 
     public static final Factory FACTORY = new Factory() {
 
