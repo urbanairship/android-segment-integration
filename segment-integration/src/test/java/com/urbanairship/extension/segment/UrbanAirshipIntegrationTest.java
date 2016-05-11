@@ -69,15 +69,14 @@ public class UrbanAirshipIntegrationTest {
 
     @Test
     public void testGroup() {
-        GroupPayload payload = new GroupPayloadBuilder().build();
-        payload.put("name", "testName");
+        GroupPayload payload = new GroupPayloadBuilder().groupId("groupId").build();
 
         TagEditor tagEditor = mock(TagEditor.class);
         when(pushManager.editTags()).thenReturn(tagEditor);
         when(tagEditor.addTag(anyString())).thenReturn(tagEditor);
 
         integration.group(payload);
-        verify(tagEditor).addTag("testName");
+        verify(tagEditor).addTag("groupId");
     }
 
     @Test
@@ -98,21 +97,10 @@ public class UrbanAirshipIntegrationTest {
     }
 
     @Test
-    public void testMaxScreen() {
-        String expected = "VIEWED_category_name";
+    public void testScreen() {
+        String expected = "name";
         ScreenPayload payload = new ScreenPayloadBuilder()
                 .category("category")
-                .name("name")
-                .build();
-
-        integration.screen(payload);
-        verify(analytics).trackScreen(expected);
-    }
-
-    @Test
-    public void testMinScreen() {
-        String expected = "VIEWED_name";
-        ScreenPayload payload = new ScreenPayloadBuilder()
                 .name("name")
                 .build();
 

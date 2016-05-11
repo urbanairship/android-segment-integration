@@ -26,11 +26,11 @@ import com.urbanairship.util.UAStringUtil;
  */
 public class SegmentAutopilot extends Autopilot {
 
-    public static final String APP_KEY = "appKey";
-    public static final String APP_SECRET = "appSecret";
-    public static final String GCM_SENDER = "gcmSender";
-    public static final String NOTIFICATION_ICON = "notificationIcon";
-    public static final String NOTIFICATION_ACCENT_COLOR = "notificationAccentColor";
+    private static final String APP_KEY = "appKey";
+    private static final String APP_SECRET = "appSecret";
+    private static final String GCM_SENDER = "gcmSender";
+    private static final String NOTIFICATION_ICON = "notificationIcon";
+    private static final String NOTIFICATION_ACCENT_COLOR = "notificationAccentColor";
     private static final String PREFERENCE_NAME = "com.urbanairship.extension.segment";
 
     @Override

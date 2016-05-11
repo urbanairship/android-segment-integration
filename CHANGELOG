@@ -1,0 +1,7 @@
+ChangeLog
+=========
+
+Version 1.0.1 - MAY 10, 2016
+============================
+- Fixed Factory key.
+- Updated used event fields in the screen() and group() implementations.
