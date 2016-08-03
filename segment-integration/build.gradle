@@ -1,5 +1,5 @@
 group = 'com.urbanairship.android'
-version = '1.0.1'
+version = '1.0.2'
 description = "Urban Airship Segment integration"
 
 apply plugin: 'com.android.library'
@@ -11,7 +11,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        minSdkVersion 23
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName project.version
