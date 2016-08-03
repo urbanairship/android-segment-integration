@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+Version 1.0.2 - AUG 3, 2016
+============================
+- Changed the project minSdkVersion to 16.
+
 Version 1.0.1 - MAY 10, 2016
 ============================
 - Fixed Factory key.
