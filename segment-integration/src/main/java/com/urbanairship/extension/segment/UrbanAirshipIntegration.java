@@ -55,7 +55,7 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
 
     @Override
     public void identify(IdentifyPayload identify) {
-        airship.getPushManager().getNamedUser().setId(identify.userId());
+        airship.getNamedUser().setId(identify.userId());
     }
 
     @Override
@@ -107,7 +107,7 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
 
     @Override
     public void reset() {
-        airship.getPushManager().getNamedUser().setId(null);
+        airship.getNamedUser().setId(null);
         airship.getPushManager().setTags(new HashSet<String>());
     }
 

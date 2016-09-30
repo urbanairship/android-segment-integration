@@ -1,5 +1,5 @@
 group = 'com.urbanairship.android'
-version = '1.0.2'
+version = '1.1.0'
 description = "Urban Airship Segment integration"
 
 apply plugin: 'com.android.library'
@@ -7,12 +7,12 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName project.version
     }
@@ -24,11 +24,11 @@ android {
 }
 
 dependencies {
-    provided 'com.segment.analytics.android:analytics:4.0.0'
-    compile 'com.urbanairship.android:urbanairship-sdk:7.1.+'
+    provided 'com.segment.analytics.android:analytics:4.2.0'
+    compile 'com.urbanairship.android:urbanairship-sdk:8.0.+'
 
     testCompile 'junit:junit:4.12'
-    testCompile 'com.segment.analytics.android:analytics-tests:4.0.0'
+    testCompile 'com.segment.analytics.android:analytics-tests:4.2.0'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'org.robolectric:shadows-support-v4:3.0'
 }
