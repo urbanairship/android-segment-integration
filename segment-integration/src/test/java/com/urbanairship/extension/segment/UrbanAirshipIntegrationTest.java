@@ -53,7 +53,7 @@ public class UrbanAirshipIntegrationTest {
 
         when(airship.getPushManager()).thenReturn(pushManager);
         when(airship.getAnalytics()).thenReturn(analytics);
-        when(pushManager.getNamedUser()).thenReturn(namedUser);
+        when(airship.getNamedUser()).thenReturn(namedUser);
 
         integration = new UrbanAirshipIntegration(airship);
     }
