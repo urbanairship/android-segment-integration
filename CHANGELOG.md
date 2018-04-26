@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+Version 1.2.0 - April 25, 2018
+==============================
+- Updated Urban Airship SDK to 9.1.0.
+
 Version 1.1.0 - SEP 30, 2016
 =============================
 - Updated Android Urban Airship SDK to 8.0.+.
