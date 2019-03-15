@@ -7,11 +7,15 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 android {
-    compileSdkVersion 27
+    lintOptions {
+        abortOnError false
+    }
+
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName project.version
     }
@@ -20,16 +24,22 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
-    provided 'com.segment.analytics.android:analytics:4.2.0'
+    compileOnly 'com.segment.analytics.android:analytics:4.3.1'
     implementation 'com.urbanairship.android:urbanairship-core:9.7.1'
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'com.segment.analytics.android:analytics-tests:4.2.0'
-    testCompile 'org.mockito:mockito-core:1.9.5'
-    testCompile 'org.robolectric:shadows-support-v4:3.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'com.segment.analytics.android:analytics-tests:4.2.0'
+    testImplementation 'org.mockito:mockito-core:2.25.0'
+    testImplementation 'org.robolectric:robolectric:4.2'
 }
 
 // Create the pom configuration:
