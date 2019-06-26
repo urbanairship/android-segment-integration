@@ -34,7 +34,7 @@ android {
 
 dependencies {
     compileOnly 'com.segment.analytics.android:analytics:4.3.1'
-    implementation 'com.urbanairship.android:urbanairship-core:9.7.1'
+    implementation 'com.urbanairship.android:urbanairship-core:10.0.2'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.segment.analytics.android:analytics-tests:4.2.0'
@@ -85,7 +85,7 @@ publishing {
 
                 root.appendNode('description', project.description)
                 root.appendNode('name', project.name)
-                root.appendNode('url', 'https://urbanairship.com')
+                root.appendNode('url', 'https://airship.com')
                 root.children().last() + pomConfig
             }
         }
@@ -109,7 +109,7 @@ bintray {
         userOrg = 'urbanairship'
         name = project.name
         desc = project.description
-        websiteUrl = 'https://urbanairship.com'
+        websiteUrl = 'https://airship.com'
         licenses = ['Apache-2.0']
         publish = true
         vcsUrl = 'https://github.com/urbanairship/android-segment-integration.git'

@@ -28,7 +28,6 @@ public class SegmentAutopilot extends Autopilot {
 
     private static final String APP_KEY = "appKey";
     private static final String APP_SECRET = "appSecret";
-    private static final String GCM_SENDER = "gcmSender";
     private static final String NOTIFICATION_ICON = "notificationIcon";
     private static final String NOTIFICATION_ACCENT_COLOR = "notificationAccentColor";
     private static final String PREFERENCE_NAME = "com.urbanairship.extension.segment";
@@ -48,11 +47,6 @@ public class SegmentAutopilot extends Autopilot {
         if (preferences.contains(APP_KEY) && preferences.contains(APP_SECRET)) {
             builder.setProductionAppKey(preferences.getString(APP_KEY, null))
                     .setProductionAppSecret(preferences.getString(APP_SECRET, null));
-        }
-
-        // Apply GCM Sender from Segment
-        if (preferences.contains(GCM_SENDER)) {
-            builder.setGcmSender(preferences.getString(GCM_SENDER, null));
         }
 
         if (preferences.contains(NOTIFICATION_ACCENT_COLOR)) {
@@ -75,8 +69,7 @@ public class SegmentAutopilot extends Autopilot {
     static void updateSegmentSettings(Context context, ValueMap settings) {
         SharedPreferences.Editor editor = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE).edit()
                 .putString(APP_KEY, settings.getString(APP_KEY))
-                .putString(APP_SECRET, settings.getString(APP_SECRET))
-                .putString(GCM_SENDER, settings.getString(GCM_SENDER));
+                .putString(APP_SECRET, settings.getString(APP_SECRET));
 
 
         // Convert accent color hex string to an int
