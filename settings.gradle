@@ -1,1 +1,1 @@
-include ':segment-integration'
+include ':segment-integration', ':sample'
