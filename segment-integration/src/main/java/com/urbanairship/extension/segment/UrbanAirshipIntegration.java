@@ -1,5 +1,5 @@
 /*
- Copyright 2016 Urban Airship and Contributors
+ Copyright Airship and Contributors
 */
 
 package com.urbanairship.extension.segment;
@@ -20,7 +20,7 @@ import java.util.HashSet;
 
 
 /**
- * Urban Airship Segment integration.
+ * Airship Segment integration.
  */
 public class UrbanAirshipIntegration extends Integration<UAirship> {
 
