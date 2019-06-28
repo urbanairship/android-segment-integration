@@ -23,6 +23,9 @@ android {
     }
 
     repositories {
+        maven {
+            url "https://urbanairship.bintray.com/android"
+        }
     }
 
 }
@@ -35,4 +38,20 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // Segment
+    implementation 'com.segment.analytics.android:analytics:4.+'
+
+    // Airship Integration
+    // apps add integration using the following dependency 
+//    implementation 'com.urbanairship.android:segment-integration:+'
+    //  only this sample app uses the following local dependency
+    implementation project(":segment-integration")  
+
+    implementation 'com.urbanairship.android:urbanairship-core:10.0.2'
+
+    // FCM Push Provider
+    implementation 'com.urbanairship.android:urbanairship-fcm:10.0.2'
 }
+
+apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
