@@ -1,7 +1,7 @@
 ChangeLog
 =========
 
-Version 2.0.0 - July 1, 2019
+Version 2.0.0 - July 3, 2019
 ============================
 - Update Airship Android SDK to 10.0.2
 - Add sample app
