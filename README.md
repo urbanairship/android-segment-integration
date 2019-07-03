@@ -44,13 +44,10 @@
         .build();
 ```
 
-5) Set up a Push Provider as described in the following [Airship docs](https://docs.airship.com/platform/android/getting-started/#push-provider-setup). Add the Airship core and your chosen push provider as a dependency in your app's build.gradle file. e.g. for FCM:
+5) Set up a Push Provider as described in the following [Airship docs](https://docs.airship.com/platform/android/getting-started/#push-provider-setup). Add your chosen push provider as a dependency in your app's build.gradle file. e.g. for FCM:
 ```
    dependencies {
        ...
-
-       // Airship Core
-       implementation 'com.urbanairship.android:urbanairship-core:10.0.2'
 
        // Airship FCM Push Provider
        implementation 'com.urbanairship.android:urbanairship-fcm:10.0.2'
