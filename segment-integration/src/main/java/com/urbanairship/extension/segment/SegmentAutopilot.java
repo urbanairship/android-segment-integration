@@ -1,5 +1,5 @@
 /*
- Copyright 2016 Urban Airship and Contributors
+ Copyright Airship and Contributors
 */
 
 package com.urbanairship.extension.segment;
@@ -21,8 +21,7 @@ import com.urbanairship.util.UAStringUtil;
  * Autopilot for segment integration.
  * <p/>
  * Autopilot allows segment integration call to be called outside of {@link Application#onCreate()}.
- * When a push is received and wakes the application up, Urban Airship will used the last config to
- * takeoff.
+ * When a push is received and wakes the application up, Airship will use the last config to takeoff.
  */
 public class SegmentAutopilot extends Autopilot {
 
@@ -52,7 +51,7 @@ public class SegmentAutopilot extends Autopilot {
 
         // Apply GCM Sender from Segment
         if (preferences.contains(GCM_SENDER)) {
-            builder.setGcmSender(preferences.getString(GCM_SENDER, null));
+            builder.setFcmSenderId(preferences.getString(GCM_SENDER, null));
         }
 
         if (preferences.contains(NOTIFICATION_ACCENT_COLOR)) {
@@ -67,7 +66,7 @@ public class SegmentAutopilot extends Autopilot {
     }
 
     /**
-     * Updates the Segment settings for the Urban Airship config.
+     * Updates the Segment settings for the Airship config.
      *
      * @param context The application context.
      * @param settings Segment settings.
