@@ -34,3 +34,5 @@ captures/
 .idea
 .DS_STORE
 *.iml
+
+google-services.json

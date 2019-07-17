@@ -8,7 +8,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.segment.analytics.ValueMap;
 import com.urbanairship.AirshipConfigOptions;
@@ -31,6 +33,8 @@ public class SegmentAutopilot extends Autopilot {
     private static final String NOTIFICATION_ICON = "notificationIcon";
     private static final String NOTIFICATION_ACCENT_COLOR = "notificationAccentColor";
     private static final String PREFERENCE_NAME = "com.urbanairship.extension.segment";
+
+    private static final String TAG = "AirshipSegment";
 
     @Override
     public AirshipConfigOptions createAirshipConfigOptions(@NonNull Context context) {
@@ -84,7 +88,7 @@ public class SegmentAutopilot extends Autopilot {
             try {
                 editor.putInt(NOTIFICATION_ACCENT_COLOR, Color.parseColor(accentColor));
             } catch (IllegalArgumentException e) {
-                Logger.error("Unable to parse notification accent color: " + accentColor, e);
+                Log.e(TAG, "Unable to parse notification accent color: " + accentColor, e);
             }
         }
 
@@ -95,16 +99,11 @@ public class SegmentAutopilot extends Autopilot {
             if (id != 0) {
                 editor.putInt(NOTIFICATION_ICON, id);
             } else {
-                Logger.error("Unable to find notification icon with name: " + notificationIconName);
+                Log.e(TAG, "Unable to find notification icon with name: " + notificationIconName);
             }
         }
 
         editor.apply();
-    }
-
-    @Override
-    public void onAirshipReady(UAirship uAirship) {
-        Logger.info("SegmentAutopilot - Airship Ready");
     }
 
     @Override

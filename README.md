@@ -50,7 +50,7 @@
        ...
 
        // Airship FCM Push Provider
-       implementation 'com.urbanairship.android:urbanairship-fcm:10.0.2'
+       implementation 'com.urbanairship.android:urbanairship-fcm:11.0.1'
    }
 ```
 

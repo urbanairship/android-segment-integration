@@ -1,10 +1,14 @@
 ChangeLog
 =========
 
-Version 2.0.0 - July 3, 2019
-============================
-- Update Airship Android SDK to 10.0.2
+Version 2.0.0 - July 17, 2019
+=============================
+- Update Airship Android SDK to 11.0.1
 - Add sample app
+
+Applications are required to migrate to Android X before using this version. For more info, see
+[Migrating to AndroidX](https://developer.android.com/jetpack/androidx/migrate)
+
 
 Version 1.2.1 - Mar 14, 2019
 ==============================
