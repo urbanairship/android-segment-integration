@@ -9,13 +9,14 @@ import com.urbanairship.extension.segment.UrbanAirshipIntegration;
 import com.urbanairship.UAirship;
 
 public class SampleApplication extends Application {
-
+    private static final String WRITE_KEY = "";
+    
     @Override
     public void onCreate() {
         super.onCreate();
 
         // Create an analytics client with the given context and Segment write key.
-        Analytics analytics = new Analytics.Builder(this, "3bzatGNsExyMlDyEQUjk1rOhBUVPB1tt")
+        Analytics analytics = new Analytics.Builder(this, WRITE_KEY)
                 // Enable this to record certain application events automatically!
                 .trackApplicationLifecycleEvents()
                 // Enable this to record screen views automatically!
