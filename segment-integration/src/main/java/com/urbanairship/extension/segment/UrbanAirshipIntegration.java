@@ -17,6 +17,7 @@ import com.urbanairship.analytics.CustomEvent;
 import com.urbanairship.util.UAStringUtil;
 
 import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -25,6 +26,14 @@ import java.util.HashSet;
 public class UrbanAirshipIntegration extends Integration<UAirship> {
 
     public static final String URBAN_AIRSHIP_KEY = "Urban Airship";
+    private static final String TAGS_GROUP_KEY = "segment-integration";
+
+    private static final long MAX_TAG_LENGTH = 128;
+
+    private static final String EVENT_TRANSACTION_ID = "cdp";
+    private static final String TRACK_REVENUE_KEY = "revenue";
+    private static final String TRACK_VALUE_KEY = "value";
+
 
     public static final Factory FACTORY = new Factory() {
 
@@ -56,6 +65,31 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
     @Override
     public void identify(IdentifyPayload identify) {
         airship.getNamedUser().setId(identify.userId());
+
+
+        Set<String> tags = new HashSet<>();
+        if (identify.traits() != null) {
+            for (String trait : identify.traits().keySet()) {
+                if (UAStringUtil.isEmpty(trait) || trait.length() > MAX_TAG_LENGTH) {
+                    continue;
+                }
+
+                Object value = identify.traits().get(trait);
+                if (!(value instanceof Boolean)) {
+                    continue;
+                }
+
+                Boolean boolValue = (Boolean) value;
+                if (boolValue) {
+                    tags.add(trait);
+                }
+            }
+        }
+
+        airship.getNamedUser()
+                .editTagGroups()
+                .setTags(TAGS_GROUP_KEY, tags)
+                .apply();
     }
 
     @Override
@@ -73,11 +107,12 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
 
     @Override
     public void track(TrackPayload track) {
-        CustomEvent.Builder eventBuilder = new CustomEvent.Builder(track.event());
+        CustomEvent.Builder eventBuilder = new CustomEvent.Builder(track.event())
+                .setTransactionId(EVENT_TRANSACTION_ID);
 
-        if (track.properties().containsKey("revenue")) {
+        if (track.properties().containsKey(TRACK_REVENUE_KEY)) {
             eventBuilder.setEventValue(track.properties().revenue());
-        } else if (track.properties().containsKey("value")) {
+        } else if (track.properties().containsKey(TRACK_VALUE_KEY)) {
             eventBuilder.setEventValue(track.properties().value());
         }
 
@@ -93,7 +128,7 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
             } else if (value instanceof Boolean) {
                 eventBuilder.addProperty(key, (Boolean) value);
             } else if (value instanceof Number) {
-                eventBuilder.addProperty(key, ((Number)value).doubleValue());
+                eventBuilder.addProperty(key, ((Number) value).doubleValue());
             }
         }
 
