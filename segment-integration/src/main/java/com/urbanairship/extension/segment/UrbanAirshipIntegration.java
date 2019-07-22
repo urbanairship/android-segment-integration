@@ -14,6 +14,7 @@ import com.segment.analytics.integrations.TrackPayload;
 import com.urbanairship.Autopilot;
 import com.urbanairship.UAirship;
 import com.urbanairship.analytics.CustomEvent;
+import com.urbanairship.push.TagGroupsEditor;
 import com.urbanairship.util.UAStringUtil;
 
 import java.util.HashSet;
@@ -66,8 +67,9 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
     public void identify(IdentifyPayload identify) {
         airship.getNamedUser().setId(identify.userId());
 
+        TagGroupsEditor tagGroupsEditor = airship.getNamedUser().editTagGroups();
 
-        Set<String> tags = new HashSet<>();
+        // Traits is marked as nonnull but are nullable in tests. Ignore the extra null check for now.
         if (identify.traits() != null) {
             for (String trait : identify.traits().keySet()) {
                 if (UAStringUtil.isEmpty(trait) || trait.length() > MAX_TAG_LENGTH) {
@@ -81,15 +83,14 @@ public class UrbanAirshipIntegration extends Integration<UAirship> {
 
                 Boolean boolValue = (Boolean) value;
                 if (boolValue) {
-                    tags.add(trait);
+                    tagGroupsEditor.addTag(TAGS_GROUP_KEY, trait);
+                } else {
+                    tagGroupsEditor.removeTag(TAGS_GROUP_KEY, trait);
                 }
             }
         }
 
-        airship.getNamedUser()
-                .editTagGroups()
-                .setTags(TAGS_GROUP_KEY, tags)
-                .apply();
+        tagGroupsEditor.apply();
     }
 
     @Override

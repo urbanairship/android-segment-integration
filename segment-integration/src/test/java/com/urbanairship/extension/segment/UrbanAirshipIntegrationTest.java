@@ -17,7 +17,6 @@ import com.urbanairship.analytics.Analytics;
 import com.urbanairship.analytics.CustomEvent;
 import com.urbanairship.analytics.Event;
 import com.urbanairship.json.JsonException;
-import com.urbanairship.json.JsonList;
 import com.urbanairship.json.JsonMap;
 import com.urbanairship.json.JsonValue;
 import com.urbanairship.push.NamedUser;
@@ -37,6 +36,7 @@ import org.robolectric.annotation.Config;
 import java.util.HashSet;
 import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Matchers.anyString;
@@ -83,13 +83,7 @@ public class UrbanAirshipIntegrationTest {
         integration.identify(payload);
         verify(namedUser).setId("userId");
 
-        JsonMap expectedOperation = JsonMap.newBuilder()
-                .put("set", JsonMap.newBuilder()
-                        .put("segment-integration", JsonList.EMPTY_LIST)
-                        .build())
-                .build();
-
-        assertEquals(editor.appliedMutations.get(0).toJsonValue(), expectedOperation.toJsonValue());
+        assertTrue(editor.appliedMutations.isEmpty());
     }
 
     @Test
@@ -112,8 +106,11 @@ public class UrbanAirshipIntegrationTest {
         verify(namedUser).setId("userId");
 
         JsonMap expectedOperation = JsonMap.newBuilder()
-                .put("set", JsonMap.newBuilder()
+                .put("add", JsonMap.newBuilder()
                         .put("segment-integration", JsonValue.wrap(new String[] {"cool", "story"}))
+                        .build())
+                .put("remove", JsonMap.newBuilder()
+                        .put("segment-integration", JsonValue.wrap(new String[] {"foo" }))
                         .build())
                 .build();
 
