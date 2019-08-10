@@ -1,5 +1,5 @@
 group = 'com.urbanairship.android'
-version = '1.2.1'
+version = '2.1.0'
 description = "Urban Airship Segment Integration"
 
 apply plugin: 'com.android.library'
@@ -34,7 +34,7 @@ android {
 
 dependencies {
     compileOnly 'com.segment.analytics.android:analytics:4.3.1'
-    implementation 'com.urbanairship.android:urbanairship-core:11.0.1'
+    implementation 'com.urbanairship.android:urbanairship-core:11.0.3'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.segment.analytics.android:analytics-tests:4.3.1'
